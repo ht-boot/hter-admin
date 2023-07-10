@@ -1,55 +1,36 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const menuLists = [
+  // {
+  //   component: "/home/index",
+  //   meta: {
+  //     icon: "HomeFilled",
+  //     title: "首页",
+  //   },
+  //   name: "home",
+  //   path: "/home/index",
+  // },
   {
-    component: "/home/index",
+    path: "/system",
+    name: "system",
+    component: "system/index",
     meta: {
       icon: "HomeFilled",
       title: "首页",
     },
-    name: "home",
-    path: "/home/index",
   },
   {
-    component: "/dataScreen/index",
-    meta: {
-      icon: "Histogram",
-      title: "数据大屏",
-    },
-    isKeepAlive: true,
-    isLink: "",
-    title: "数据大屏",
-    name: "dataScreen",
     path: "/dataScreen",
-  },
-  {
-    component: "/dataScreen/index",
-    meta: {
-      icon: "Histogram",
-      title: "权限管理",
-    },
-    isKeepAlive: true,
     name: "dataScreen",
-    path: "/dataScreen",
-  },
-  {
-    component: "/dataScreen/index",
+    component: "dataScreen/index",
     meta: {
-      icon: "Histogram",
-      title: "系统管理",
+      icon: "HomeFilled",
+      title: "首页",
     },
-    isKeepAlive: true,
-    name: "dataScreen",
-    path: "/dataScreen",
   },
 ];
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "home",
-    component: () => import("@/layout/index.vue"),
-  },
   {
     path: "/login",
     name: "Login",
@@ -57,6 +38,23 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: "登录",
     },
+  },
+  {
+    path: "/",
+    name: "layout",
+    redirect: "/home",
+    component: () => import("@/layout/index.vue"),
+    children: [
+      {
+        path: "/home",
+        name: "home",
+        component: () => import("@/views/home/index.vue"),
+        meta: {
+          icon: "HomeFilled",
+          title: "首页",
+        },
+      },
+    ],
   },
 ];
 
@@ -73,6 +71,14 @@ const router = createRouter({
       };
     }
   },
+});
+
+// 引入 views 文件夹下所有 vue 文件
+const modules = import.meta.glob("@/views/**/*.vue");
+
+menuLists.forEach((item: any) => {
+  item.component = modules["/src/views/" + item.component + ".vue"];
+  router.addRoute("layout", item);
 });
 
 export default router;

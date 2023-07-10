@@ -12,6 +12,7 @@
             :router="false"
             :unique-opened="true"
             :collapse-transition="false"
+            :default-active="'/home'"
           >
             <MenuItem />
           </el-menu>
@@ -22,17 +23,22 @@
       <el-header>
         <HeaderBarToolLeft />
       </el-header>
-      <el-main>Main</el-main>
+      <el-main>
+        <RouterView />
+      </el-main>
       <el-footer>Footer</el-footer>
     </el-container>
   </el-container>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import MenuItem from "@/layout/components/Menu/MenuItem.vue";
 import HeaderBarToolLeft from "@/layout/components/Header/HeaderBarToolLeft.vue";
+import { useGlobal } from "@/store/modules/globalConfig";
 
-const isCollapse = ref(true);
+const store = useGlobal();
+
+const { isCollapse } = storeToRefs(store);
 </script>
 <style lang="scss" scoped>
 @import "./index.scss";

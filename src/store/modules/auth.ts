@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore({
   id: "auth", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
   state: () => ({
-    menuList: [
+    menuList: <Menu.MenuOptions[]>[
       {
         component: "/home/index",
         meta: {
@@ -11,7 +11,7 @@ export const useAuthStore = defineStore({
           title: "首页",
         },
         name: "home",
-        path: "/home/index",
+        path: "/home",
       },
       {
         component: "/dataScreen/index",
@@ -22,36 +22,25 @@ export const useAuthStore = defineStore({
         isKeepAlive: true,
         isLink: "",
         title: "数据大屏",
-        name: "dataScreen3",
-        path: "/dataScreen3",
+        name: "dataScreen",
+        path: "/dataScreen",
       },
+
       {
-        component: "/dataScreen/index",
+        component: "/system/index",
         meta: {
-          icon: "Histogram",
-          title: "权限管理",
-        },
-        isKeepAlive: true,
-        name: "dataScreen2",
-        path: "/dataScreen2",
-      },
-      {
-        component: "/dataScreen/index",
-        meta: {
-          icon: "Histogram",
+          icon: "Platform",
           title: "系统管理",
         },
         isKeepAlive: true,
-        name: "dataScreen1",
-        path: "/dataScreen1",
+        name: "system",
+        path: "/system",
       },
     ],
   }),
   getters: {},
   actions: {
     getMenuList(listArr: any) {
-      console.log(listArr);
-
       this.menuList = listArr;
     },
   },

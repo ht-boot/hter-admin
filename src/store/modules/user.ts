@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
-import { UserState } from "../interface";
+
+interface UserState {
+  token: string;
+  userInfo: { name: string };
+}
 
 export const useUserStore = defineStore({
   id: "user", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
