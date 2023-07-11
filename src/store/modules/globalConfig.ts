@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import piniaLastingState from "@/utils/piniaLastingState";
 
 type Tbreadcrumb = {
   icon: string;
@@ -21,7 +22,7 @@ export const useGlobal = defineStore({
   state: (): IUseGlobal => ({
     // 折叠菜单
     isCollapse: false,
-    // 默认数据
+    // 面包屑默认数据
     breadcrumbList: [
       {
         path: "/home",
@@ -38,6 +39,7 @@ export const useGlobal = defineStore({
     setGlobalConfig(...args: ObjectToKeyValueOfArray<IUseGlobal>) {
       this.$patch({ [args[0]]: args[1] });
     },
+    // 面包屑数据更新
     setBreadcrumbList<K extends keyof IUseGlobal>(
       key: K,
       val: Menu.MenuOptions
@@ -45,4 +47,5 @@ export const useGlobal = defineStore({
       this.$patch({ [key]: [val] });
     },
   },
+  persist: piniaLastingState("global"),
 });
