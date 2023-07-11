@@ -22,6 +22,7 @@
     <el-container>
       <el-header>
         <HeaderBarToolLeft />
+        <HeaderBarToolRight />
       </el-header>
       <el-main>
         <RouterView />
@@ -36,6 +37,7 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import MenuItem from "@/layout/components/Menu/MenuItem.vue";
 import HeaderBarToolLeft from "@/layout/components/Header/HeaderBarToolLeft.vue";
+import HeaderBarToolRight from "@/layout/components/Header/HeaderBarToolRight.vue";
 import { useGlobal } from "@/store/modules/globalConfig";
 
 const store = useGlobal();
