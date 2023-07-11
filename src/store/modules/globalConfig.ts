@@ -8,6 +8,8 @@ type Tbreadcrumb = {
 
 interface IUseGlobal {
   isCollapse: boolean;
+  assemblySize: string;
+  isDark: boolean;
   breadcrumbList: Array<{
     path: string;
     name: string;
@@ -22,6 +24,10 @@ export const useGlobal = defineStore({
   state: (): IUseGlobal => ({
     // 折叠菜单
     isCollapse: false,
+    // 组件大小
+    assemblySize: "default",
+    // 主题配置
+    isDark: false,
     // 面包屑默认数据
     breadcrumbList: [
       {

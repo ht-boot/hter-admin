@@ -51,7 +51,7 @@ const handleCheckIcon = () => {
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      color: rgba(0, 0, 0, 0.75);
+      color: var(--el-text-color-primary);
       .breadcrumb-icon {
         font-size: 18px;
         margin-right: 4px;
