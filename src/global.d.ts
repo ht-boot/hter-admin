@@ -15,3 +15,5 @@ declare namespace Menu {
     title: string;
   }
 }
+
+type AssemblySizeType = "default" | "small" | "large";

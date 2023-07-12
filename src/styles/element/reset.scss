@@ -8,6 +8,13 @@ body,
   min-width: 780px;
 }
 
+html.dark {
+  img,
+  .dark-img-bg {
+    filter: brightness(0.8) saturate(1.25);
+  }
+}
+
 /* 解决 h1 标签在 webkit 内核浏览器中文字大小失效问题 */
 :-webkit-any(article, aside, nav, section) h1 {
   font-size: 2em;

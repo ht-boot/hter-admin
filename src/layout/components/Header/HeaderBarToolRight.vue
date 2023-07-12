@@ -21,7 +21,9 @@
     </el-dropdown>
     <div class="theme-chech">
       <el-switch
+        style="--el-switch-on-color: #2d2d2f; --el-switch-off-color: #b1b3b8"
         v-model="isDark"
+        size="default"
         inline-prompt
         active-text="🔆"
         inactive-text="🌙"
@@ -30,10 +32,11 @@
     </div>
     <el-icon class="search"><Search /></el-icon>
     <div class="userinfo">
-      <div class="username">『admin』</div>
+      <div class="username">admin</div>
       <div class="avatar">
         <el-avatar
           src="https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
+          alt="head.jpg"
         />
       </div>
     </div>
@@ -41,13 +44,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { useGlobal } from "@/store/modules/globalConfig";
-import toggleDark from "@/utils/theme";
 
 const storeGlobal = useGlobal();
 
 const assemblySize = computed(() => storeGlobal.assemblySize);
+
+const isDark = computed({
+  get() {
+    return storeGlobal.isDark;
+  },
+  set(newValue) {
+    storeGlobal.isDark = newValue;
+  },
+});
 
 const assemblySizeList = [
   { label: "默认", value: "default" },
@@ -55,25 +66,29 @@ const assemblySizeList = [
   { label: "小型", value: "small" },
 ];
 
-const isDark = computed({
-  get() {
-    return storeGlobal.isDark;
-  },
-  set(newValue: boolean) {
-    storeGlobal.isDark = newValue;
-  },
-});
-
 // 组件大小修改
 const handleSetAssemblySize = (size: string) => {
   storeGlobal.setGlobalConfig("assemblySize", size);
 };
 
-// 主题修改
-const handleThemeChange = (val: any) => {
-  storeGlobal.setGlobalConfig("isDark", val);
-  toggleDark();
+// 主题样式替换
+const cssReplace = () => {
+  if (isDark.value) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 };
+
+// 主题修改
+const handleThemeChange = (item: any) => {
+  storeGlobal.setGlobalConfig("isDark", item);
+  cssReplace();
+};
+
+watchEffect(() => {
+  cssReplace();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -87,7 +102,6 @@ const handleThemeChange = (val: any) => {
     cursor: pointer;
     font-size: var(--font-size);
     font-weight: 600;
-    color: var(--el-text-color-primary);
     .dropdown-icon {
       padding-right: 16px;
     }
@@ -105,12 +119,15 @@ const handleThemeChange = (val: any) => {
     align-items: center;
     .username {
       padding-right: 16px;
-      color: var(--font-color);
+      color: var(--el-text-color-primary);
       font-weight: 600;
     }
     .avatar {
       cursor: pointer;
     }
+  }
+  .el-switch {
+    transition: all 0.3s;
   }
 }
 </style>
