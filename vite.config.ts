@@ -10,10 +10,17 @@ export default defineConfig({
     host: "0.0.0.0",
     open: true,
     strictPort: true,
-    proxy: {},
+    proxy: {
+      "/api": {
+        target:
+          " https://mock.mengxuegu.com/mock/64ae5801d87ff84a6489f08b/hetr",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
   resolve: {
-    // 配置别名
+    // 配置路径别名
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },

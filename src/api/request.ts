@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useRouter } from "vue-router";
 import { useUserStore } from "@/store/modules/user";
 import { statusCheck } from "@/utils/statusCheck";
 import { ElMessage } from "element-plus";
+import router from "@/router";
 
 const store = useUserStore();
-const router = useRouter();
 
 // 获取浏览器地址 url
 const baseURL = window.location.origin + "/api";
@@ -51,7 +50,7 @@ service.interceptors.response.use(
     // 请求成功
     return data;
   },
-  async (error) => {
+  (error) => {
     const { response } = error;
     // 请求超时 && 网络错误单独判断，没有 response
     if (error.message.indexOf("timeout") !== -1)
@@ -65,3 +64,5 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export default service;
