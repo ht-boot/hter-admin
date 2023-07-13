@@ -11,9 +11,18 @@
             <h1>HTer-Admin</h1>
           </div>
           <div class="login-form">
-            <el-form ref="loginFormRef" size="large">
+            <el-form
+              ref="loginFormRef"
+              :rules="loginRules"
+              :model="loginForm"
+              size="large"
+            >
               <el-form-item prop="username">
-                <el-input size="large" placeholder="用户名：admin / user">
+                <el-input
+                  v-model="loginForm.username"
+                  size="large"
+                  placeholder="用户名：admin / user"
+                >
                   <template #prefix>
                     <el-icon class="el-input__icon">
                       <user />
@@ -23,6 +32,7 @@
               </el-form-item>
               <el-form-item prop="password">
                 <el-input
+                  v-model="loginForm.password"
                   size="large"
                   type="password"
                   placeholder="密码：123456"
@@ -39,7 +49,14 @@
             </el-form>
             <div class="login-btn">
               <el-button :icon="Refresh" round size="large"> 重置 </el-button>
-              <el-button :icon="UserFilled" round size="large" type="primary">
+              <el-button
+                :icon="UserFilled"
+                round
+                size="large"
+                type="primary"
+                :loading="loading"
+                @click="handleLogin(loginFormRef)"
+              >
                 登录
               </el-button>
             </div>
@@ -50,7 +67,32 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { ref, reactive } from "vue";
+import type { ElForm } from "element-plus";
 import { Refresh, UserFilled } from "@element-plus/icons-vue";
+
+type FormInstance = InstanceType<typeof ElForm>;
+const loginFormRef = ref<FormInstance>();
+
+const loading = ref(false);
+const loginForm = reactive<{ username: string; password: string }>({
+  username: "",
+  password: "",
+});
+
+const loginRules = reactive({
+  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+});
+
+// 登录并数据校验
+const handleLogin = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.validate(async (valid) => {
+    if (!valid) return;
+    loading.value = true;
+  });
+};
 </script>
 <style lang="scss" scoped>
 .login-container {
@@ -106,19 +148,20 @@ import { Refresh, UserFilled } from "@element-plus/icons-vue";
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 20px 0;
+          padding-top: 20px;
           img {
             margin-right: 10px;
           }
         }
         .login-form {
           .el-input {
-            padding-bottom: 20px;
+            padding-top: 20px;
           }
         }
         .login-btn {
           width: 100%;
           display: flex;
+          padding-top: 30px;
           justify-content: space-between;
           .el-button {
             width: 40%;
