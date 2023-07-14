@@ -3,22 +3,22 @@ import piniaLastingState from "@/utils/piniaLastingState";
 
 interface UserState {
   token: string;
-  userInfo: { name: string };
+  username: string;
 }
 
 export const useUserStore = defineStore({
   id: "user-info", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
   state: (): UserState => ({
     token: "",
-    userInfo: { name: "Admin" },
+    username: "",
   }),
   getters: {},
   actions: {
     setToken(token: string) {
       this.token = token;
     },
-    setUserInfo(userInfo: UserState["userInfo"]) {
-      this.userInfo = userInfo;
+    setUserInfo(username: string) {
+      this.username = username;
     },
   },
   persist: piniaLastingState("user-info"), //pinia 持久化

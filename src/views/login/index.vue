@@ -119,7 +119,8 @@ const handleLogin = (formEl: FormInstance | undefined) => {
         username: loginForm.username.trim(),
         password: loginForm.password.trim(),
       });
-      userStore.setToken(data.data.token);
+      userStore.setToken(data.token);
+      userStore.setUserInfo(data.username);
       router.push("/");
       ElNotification({
         title: getTimeState(),

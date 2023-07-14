@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import piniaLastingState from "@/utils/piniaLastingState";
 
 export const useAuthStore = defineStore({
   id: "auth", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
@@ -44,5 +45,5 @@ export const useAuthStore = defineStore({
       this.menuList = listArr;
     },
   },
-  //   persist: true, //pinia 持久化
+  persist: piniaLastingState("auth"),
 });

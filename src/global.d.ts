@@ -19,9 +19,8 @@ declare namespace Menu {
 type AssemblySizeType = "default" | "small" | "large";
 
 declare namespace Request {
-  interface Data {
-    code: number;
-    data: any;
-    message: string;
+  interface LoginResult {
+    token: string;
+    username: string;
   }
 }

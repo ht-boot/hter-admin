@@ -23,7 +23,6 @@
       <ThemeSwitch />
     </div>
     <el-icon class="search"><Search /></el-icon>
-    <div class="username">{{ "admin" }}</div>
     <Avatar />
   </div>
 </template>
@@ -72,11 +71,6 @@ const handleSetAssemblySize = (size: string) => {
     padding-right: 16px;
     font-size: var(--font-size);
     cursor: pointer;
-  }
-  .username {
-    padding-right: 16px;
-    color: var(--el-text-color-primary);
-    font-weight: 600;
   }
   .el-switch {
     transition: all 0.3s;

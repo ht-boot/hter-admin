@@ -32,6 +32,7 @@ service.interceptors.request.use(
     if (store.token && !isToken) {
       config.headers["token"] = store.token; // 让每个请求携带自定义token 请根据实际情况自行修改
     }
+
     return config;
   },
   (error) => {
@@ -45,6 +46,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (res: AxiosResponse) => {
     const { data } = res;
+    console.log(data.code);
 
     // 登录失效或者账号密码错误(根据后端返回的code码修改)
     if (data.code === 401 || data.code === 0) {
@@ -62,7 +64,7 @@ service.interceptors.response.use(
 
     closeFullscreenLoading(); // 关闭全局加载
     // 请求成功
-    return data;
+    return data.data;
   },
   (error) => {
     const { response } = error;

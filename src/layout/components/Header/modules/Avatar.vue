@@ -1,25 +1,28 @@
 <template>
-  <el-dropdown class="userinfo" trigger="click">
-    <div class="avatar">
-      <el-avatar
-        src="https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
-        alt="head.jpg"
-      />
-    </div>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item
-          ><el-icon><User /></el-icon> 个人信息</el-dropdown-item
-        >
-        <el-dropdown-item
-          ><el-icon><EditPen /></el-icon> 修改密码</el-dropdown-item
-        >
-        <el-dropdown-item divided @click="handlLogout"
-          ><el-icon><SwitchButton /></el-icon> 退出登录</el-dropdown-item
-        >
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <div class="userinfo">
+    <div class="username">{{ userStore.username ?? "admin" }}</div>
+    <el-dropdown class="avatar" trigger="click">
+      <div class="avatar">
+        <el-avatar
+          src="https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
+          alt="head.jpg"
+        />
+      </div>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item
+            ><el-icon><User /></el-icon> 个人信息</el-dropdown-item
+          >
+          <el-dropdown-item
+            ><el-icon><EditPen /></el-icon> 修改密码</el-dropdown-item
+          >
+          <el-dropdown-item divided @click="handlLogout"
+            ><el-icon><SwitchButton /></el-icon> 退出登录</el-dropdown-item
+          >
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -46,7 +49,16 @@ const handlLogout = () => {
 
 <style lang="scss" scoped>
 .userinfo {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  .username {
+    padding-right: 16px;
+    color: var(--el-text-color-primary);
+    font-weight: 600;
+  }
+  .avatar {
+    cursor: pointer;
+  }
 }
 </style>
 @/utils/tools

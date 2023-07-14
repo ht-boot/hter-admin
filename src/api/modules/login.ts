@@ -4,8 +4,8 @@ import service from "@/api/request";
 const login = async (data: {
   username: string;
   password: string;
-}): Promise<Request.Data> => {
-  const res = await service({
+}): Promise<Request.LoginResult> => {
+  return await service({
     method: "post",
     url: "/api/login",
     data,
@@ -14,8 +14,6 @@ const login = async (data: {
       notLoading: true,
     },
   });
-
-  return res;
 };
 
 export default login;
