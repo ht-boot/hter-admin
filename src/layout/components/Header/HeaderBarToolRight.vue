@@ -20,45 +20,23 @@
       </template>
     </el-dropdown>
     <div class="theme-chech">
-      <el-switch
-        style="--el-switch-on-color: #2d2d2f; --el-switch-off-color: #b1b3b8"
-        v-model="isDark"
-        size="default"
-        inline-prompt
-        active-text="🔆"
-        inactive-text="🌙"
-        @change="handleThemeChange"
-      />
+      <ThemeSwitch />
     </div>
     <el-icon class="search"><Search /></el-icon>
-    <div class="userinfo">
-      <div class="username">admin</div>
-      <div class="avatar">
-        <el-avatar
-          src="https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
-          alt="head.jpg"
-        />
-      </div>
-    </div>
+    <div class="username">{{ "admin" }}</div>
+    <Avatar />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, watchEffect } from "vue";
+import { computed } from "vue";
 import { useGlobal } from "@/store/modules/globalConfig";
+import ThemeSwitch from "./modules/ThemeSwitch.vue";
+import Avatar from "./modules/Avatar.vue";
 
 const storeGlobal = useGlobal();
 
 const assemblySize = computed(() => storeGlobal.assemblySize);
-
-const isDark = computed({
-  get() {
-    return storeGlobal.isDark;
-  },
-  set(newValue) {
-    storeGlobal.isDark = newValue;
-  },
-});
 
 const assemblySizeList = [
   { label: "默认", value: "default" },
@@ -70,25 +48,6 @@ const assemblySizeList = [
 const handleSetAssemblySize = (size: string) => {
   storeGlobal.setGlobalConfig("assemblySize", size);
 };
-
-// 主题样式替换
-const cssReplace = () => {
-  if (isDark.value) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-};
-
-// 主题修改
-const handleThemeChange = (item: any) => {
-  storeGlobal.setGlobalConfig("isDark", item);
-  cssReplace();
-};
-
-watchEffect(() => {
-  cssReplace();
-});
 </script>
 
 <style lang="scss" scoped>
@@ -114,17 +73,10 @@ watchEffect(() => {
     font-size: var(--font-size);
     cursor: pointer;
   }
-  .userinfo {
-    display: flex;
-    align-items: center;
-    .username {
-      padding-right: 16px;
-      color: var(--el-text-color-primary);
-      font-weight: 600;
-    }
-    .avatar {
-      cursor: pointer;
-    }
+  .username {
+    padding-right: 16px;
+    color: var(--el-text-color-primary);
+    font-weight: 600;
   }
   .el-switch {
     transition: all 0.3s;

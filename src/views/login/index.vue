@@ -48,7 +48,14 @@
               </el-form-item>
             </el-form>
             <div class="login-btn">
-              <el-button :icon="Refresh" round size="large"> 重置 </el-button>
+              <el-button
+                :icon="Refresh"
+                round
+                size="large"
+                @click="resetForm(loginFormRef)"
+              >
+                重置
+              </el-button>
               <el-button
                 :icon="UserFilled"
                 round
@@ -63,17 +70,27 @@
           </div>
         </el-card>
       </div>
+      <div class="theme-check">
+        <ThemeSwitch />
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import type { ElForm } from "element-plus";
+import { useRouter } from "vue-router";
+import { ElNotification, type ElForm } from "element-plus";
 import { Refresh, UserFilled } from "@element-plus/icons-vue";
+import login from "@/api/modules/login";
+import { getTimeState } from "@/utils/tools";
+import { useUserStore } from "@/store/modules/user";
+import ThemeSwitch from "@/layout/components/Header/modules/ThemeSwitch.vue";
 
 type FormInstance = InstanceType<typeof ElForm>;
 const loginFormRef = ref<FormInstance>();
 
+const userStore = useUserStore();
+const router = useRouter();
 const loading = ref(false);
 const loginForm = reactive<{ username: string; password: string }>({
   username: "",
@@ -85,27 +102,57 @@ const loginRules = reactive({
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 });
 
+// 表单重置
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.resetFields();
+};
+
 // 登录并数据校验
 const handleLogin = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate(async (valid) => {
     if (!valid) return;
     loading.value = true;
+    try {
+      const data = await login({
+        username: loginForm.username.trim(),
+        password: loginForm.password.trim(),
+      });
+      userStore.setToken(data.data.token);
+      router.push("/");
+      ElNotification({
+        title: getTimeState(),
+        message: "欢迎登录, 工作顺利。🍉🍉🍉",
+        type: "success",
+        duration: 3000,
+      });
+    } finally {
+      loading.value = false;
+    }
   });
 };
 </script>
 <style lang="scss" scoped>
+html.dark {
+  .login-container {
+    .login-main {
+      box-shadow: 20px 20px 60px #2e2a2a, -20px -20px 60px #2e2a2a;
+    }
+  }
+}
 .login-container {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: #eee;
+  min-height: 680px;
   background: url("@/assets/svg/bg-svg.svg") no-repeat 100%;
   min-width: none;
 
   .login-main {
+    position: relative;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -114,7 +161,6 @@ const handleLogin = (formEl: FormInstance | undefined) => {
     height: 94%;
     padding: 0 50px;
     border-radius: 50px;
-    background: rgba($color: #e0e0e0, $alpha: 0.4);
     box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #bebebe;
     .login-decoration {
       flex: 1;
@@ -140,7 +186,6 @@ const handleLogin = (formEl: FormInstance | undefined) => {
         width: 85%;
         max-width: 620px;
         border-radius: 20px;
-        background-color: #fff;
         padding: 0 35px;
         padding-bottom: 35px;
         box-sizing: border-box;
@@ -169,6 +214,11 @@ const handleLogin = (formEl: FormInstance | undefined) => {
         }
       }
     }
+    .theme-check {
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
   }
 }
 
@@ -176,8 +226,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
   .login-decoration {
     flex: 0 !important;
   }
-
-  .login-box .box-card {
+  .box-card {
     width: 100% !important;
   }
   .login-main {

@@ -91,6 +91,7 @@ menuLists.forEach((item: any) => {
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+
   // 进度条 开始
   NProgress.start();
   if (userStore.token) {

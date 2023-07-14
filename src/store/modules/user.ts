@@ -7,7 +7,7 @@ interface UserState {
 }
 
 export const useUserStore = defineStore({
-  id: "user", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
+  id: "user-info", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
   state: (): UserState => ({
     token: "",
     userInfo: { name: "Admin" },
@@ -21,5 +21,5 @@ export const useUserStore = defineStore({
       this.userInfo = userInfo;
     },
   },
-  persist: piniaLastingState("user"), //pinia 持久化
+  persist: piniaLastingState("user-info"), //pinia 持久化
 });

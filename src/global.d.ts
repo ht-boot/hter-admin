@@ -17,3 +17,11 @@ declare namespace Menu {
 }
 
 type AssemblySizeType = "default" | "small" | "large";
+
+declare namespace Request {
+  interface Data {
+    code: number;
+    data: any;
+    message: string;
+  }
+}

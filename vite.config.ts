@@ -12,10 +12,15 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       "/api": {
-        target:
-          " https://mock.mengxuegu.com/mock/64ae5801d87ff84a6489f08b/hetr",
+        target: "https://mock.mengxuegu.com/mock/64ae5801d87ff84a6489f08b/hetr",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      // 图片服务器
+      "/uplaodImg": {
+        target: " https://v2.alapi.cn/api/image",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/uplaodImg/, ""),
       },
     },
   },

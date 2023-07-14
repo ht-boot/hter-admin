@@ -4,11 +4,15 @@ import service from "@/api/request";
 const login = async (data: {
   username: string;
   password: string;
-}): Promise<any> => {
+}): Promise<Request.Data> => {
   const res = await service({
     method: "post",
-    url: "/login",
+    url: "/api/login",
     data,
+    // 当前不需要lodaing, 若需要则去除headers
+    headers: {
+      notLoading: true,
+    },
   });
 
   return res;
