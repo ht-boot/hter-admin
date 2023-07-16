@@ -8,8 +8,6 @@ import {
   closeFullscreenLoading,
 } from "@/utils/fullscreenLoading";
 
-const store = useUserStore();
-
 // 获取浏览器地址 url
 const baseURL = window.location.origin;
 
@@ -25,6 +23,7 @@ const service = axios.create({
  */
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    const store = useUserStore();
     // 是否需要设置 token
     const isToken = (config.headers || {}).isToken === false;
     // 当前请求不需要显示 loading。
@@ -45,8 +44,8 @@ service.interceptors.request.use(
  */
 service.interceptors.response.use(
   (res: AxiosResponse) => {
+    const store = useUserStore();
     const { data } = res;
-    console.log(data.code);
 
     // 登录失效或者账号密码错误(根据后端返回的code码修改)
     if (data.code === 401 || data.code === 0) {

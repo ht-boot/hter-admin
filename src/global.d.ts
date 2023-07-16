@@ -13,6 +13,8 @@ declare namespace Menu {
   interface IMeta {
     icon: string;
     title: string;
+    isKeepAlive?: boolean;
+    [key: string]: any;
   }
 }
 

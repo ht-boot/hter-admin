@@ -1,10 +1,12 @@
 import service from "@/api/request";
 
 // 登录
-export const getMenusApi = async () => {
-  const res = await service({
+export const apiGetMenuList = async (): Promise<Menu.MenuOptions[]> => {
+  return await service({
     method: "get",
     url: "/api/menus",
+    headers: {
+      notLoading: true,
+    },
   });
-  return res;
 };

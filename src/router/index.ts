@@ -2,39 +2,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import NProgress from "@/utils/nprogress";
 import { useUserStore } from "@/store/modules/user";
 
-const menuLists = [
-  // {
-  //   component: "/home/index",
-  //   meta: {
-  //     icon: "HomeFilled",
-  //     title: "首页",
-  //   },
-  //   name: "home",
-  //   path: "/home/index",
-  // },
-  {
-    path: "/system",
-    name: "system",
-    component: "system/index",
-    meta: {
-      icon: "HomeFilled",
-      title: "系统管理",
-    },
-  },
-  {
-    path: "/dataScreen",
-    name: "dataScreen",
-    component: "dataScreen/index",
-    meta: {
-      icon: "HomeFilled",
-      title: "数据大屏",
-    },
-  },
-];
-
+// 白名单
 const whiteList = ["/login"];
 
-const routes: Array<RouteRecordRaw> = [
+const staticRoutes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "Login",
@@ -64,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: staticRoutes,
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
       return savedPosition;
@@ -77,21 +48,11 @@ const router = createRouter({
   },
 });
 
-// 引入 views 文件夹下所有 vue 文件
-const modules = import.meta.glob("@/views/**/*.vue");
-
-menuLists.forEach((item: any) => {
-  item.component = modules["/src/views/" + item.component + ".vue"];
-  router.addRoute("layout", item);
-});
-
 /**
  * @description 路由拦截 beforeEach
  * */
-
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
-
   // 进度条 开始
   NProgress.start();
   if (userStore.token) {

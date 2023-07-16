@@ -7,14 +7,20 @@
         </el-icon>
         <span>{{ subItem.meta.title }}</span>
       </template>
-      <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
-      </el-sub-menu>
+      <el-menu-item v-for="item in subItem.children" :key="item.path">
+        <el-icon>
+          <component :is="subItem.meta.icon"></component>
+        </el-icon>
+        <template #title>
+          <span>{{ subItem.meta.title }}</span>
+        </template>
+      </el-menu-item>
     </el-sub-menu>
-    <el-menu-item :index="subItem.path" @click="handleClickMenu(subItem)">
+    <el-menu-item
+      v-else
+      :index="subItem.path"
+      @click="handleClickMenu(subItem)"
+    >
       <el-icon>
         <component :is="subItem.meta.icon"></component>
       </el-icon>
@@ -26,10 +32,13 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/modules/auth";
 import { useGlobal } from "@/store/modules/globalConfig";
-const { menuList } = useAuthStore();
+
+const authStore = useAuthStore();
+const menuList = computed(() => authStore.menuList);
 
 const router = useRouter();
 const store = useGlobal();
@@ -37,7 +46,7 @@ const store = useGlobal();
 const { setBreadcrumbList } = store;
 
 const handleClickMenu = (item: Menu.MenuOptions) => {
-  // if (item.meta.isLink) return window.open(item.meta.isLink, "_blank");
+  console.log(item);
   setBreadcrumbList("breadcrumbList", item);
   router.push(item.path);
 };

@@ -79,25 +79,30 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { ElNotification, type ElForm } from "element-plus";
+import { ElNotification } from "element-plus";
+import type { FormInstance, FormRules } from "element-plus";
 import { Refresh, UserFilled } from "@element-plus/icons-vue";
 import login from "@/api/modules/login";
 import { getTimeState } from "@/utils/tools";
 import { useUserStore } from "@/store/modules/user";
+import { dynamicRouting } from "@/router/modules/dynamicRoutes";
 import ThemeSwitch from "@/layout/components/Header/modules/ThemeSwitch.vue";
 
-type FormInstance = InstanceType<typeof ElForm>;
 const loginFormRef = ref<FormInstance>();
+interface LoginForm {
+  username: string;
+  password: string;
+}
 
 const userStore = useUserStore();
 const router = useRouter();
 const loading = ref(false);
-const loginForm = reactive<{ username: string; password: string }>({
+const loginForm = reactive<LoginForm>({
   username: "",
   password: "",
 });
 
-const loginRules = reactive({
+const loginRules = reactive<FormRules<LoginForm>>({
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 });
@@ -128,6 +133,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
         type: "success",
         duration: 3000,
       });
+      dynamicRouting();
     } finally {
       loading.value = false;
     }

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <el-button>hello</el-button>
+    <el-button @click="dynamicRouting">hello</el-button>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { dynamicRouting } from "@/router/modules/dynamicRoutes";
+</script>

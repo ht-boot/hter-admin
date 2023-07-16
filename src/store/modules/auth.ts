@@ -1,48 +1,23 @@
 import { defineStore } from "pinia";
 import piniaLastingState from "@/utils/piniaLastingState";
+import { apiGetMenuList } from "@/api/modules/authorisation";
+import { handleFlatMenuList } from "@/utils/tools";
 
 export const useAuthStore = defineStore({
   id: "auth", // id是必须传入的， Pinia 将用它来连接 store 和 devtools。
   state: () => ({
-    menuList: <Menu.MenuOptions[]>[
-      {
-        component: "/home/index",
-        meta: {
-          icon: "HomeFilled",
-          title: "首页",
-        },
-        name: "home",
-        path: "/home",
-      },
-      {
-        component: "/dataScreen/index",
-        meta: {
-          icon: "Histogram",
-          title: "数据大屏",
-        },
-        isKeepAlive: true,
-        isLink: "",
-        title: "数据大屏",
-        name: "dataScreen",
-        path: "/dataScreen",
-      },
-
-      {
-        component: "/system/index",
-        meta: {
-          icon: "Platform",
-          title: "系统管理",
-        },
-        isKeepAlive: true,
-        name: "system",
-        path: "/system",
-      },
-    ],
+    menuList: <Menu.MenuOptions[]>[],
   }),
-  getters: {},
+  getters: {
+    // 扁平化菜单， 用于动态路由
+    flatMenuList: (state) => handleFlatMenuList(state.menuList),
+    // 菜单权限列表
+    // showMenuList: (state) => {},
+  },
   actions: {
-    getMenuList(listArr: any) {
-      this.menuList = listArr;
+    async getMenuList() {
+      const data = await apiGetMenuList();
+      this.menuList = data;
     },
   },
   persist: piniaLastingState("auth"),
