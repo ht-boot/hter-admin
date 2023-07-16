@@ -46,7 +46,6 @@ const store = useGlobal();
 const { setBreadcrumbList } = store;
 
 const handleClickMenu = (item: Menu.MenuOptions) => {
-  console.log(item);
   setBreadcrumbList("breadcrumbList", item);
   router.push(item.path);
 };

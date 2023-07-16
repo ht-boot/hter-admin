@@ -1,21 +1,47 @@
 import router from "@/router";
+import { PiniaCustomStateProperties, Store } from "pinia";
 import { RouteRecordRaw } from "vue-router";
-import { useAuthStore } from "@/store/modules/auth";
-import { useUserStore } from "@/store/modules/user";
-
-const userStore = useUserStore();
 
 // 引入 views 文件夹下所有 vue 文件
 const modules = import.meta.glob("@/views/**/*.vue");
 
-export const dynamicRouting = async () => {
+/**
+ *
+ * @param userStore
+ * @param authStore
+ * @returns
+ */
+
+type TUser = Store<
+  "user-info",
+  PiniaStoreType.StoreUserState,
+  {},
+  {
+    setToken(token: string): void;
+    setUserInfo(username: string): void;
+  }
+>;
+
+type TAuth = Store<
+  "auth",
+  PiniaStoreType.StoreAuthState,
+  {
+    flatMenuList: (
+      state: {
+        menuList: Menu.MenuOptions[];
+      } & PiniaCustomStateProperties<{ menuList: Menu.MenuOptions[] }>
+    ) => Menu.MenuOptions[];
+  },
+  { getMenuList(): Promise<void> }
+>;
+
+export const dynamicRouting = async (userStore: TUser, authStore: TAuth) => {
   try {
-    const authStore = useAuthStore();
     await authStore.getMenuList();
 
     const newMenuList = authStore.flatMenuList;
 
-    newMenuList.forEach((item) => {
+    newMenuList.forEach((item: Menu.MenuOptions) => {
       item.children && delete item.children;
 
       if (item.component && typeof item.component == "string") {
@@ -29,7 +55,7 @@ export const dynamicRouting = async () => {
       }
     });
   } catch (error) {
-    // 当按钮 || 菜单请求出错时，重定向到登陆页
+    //菜单请求出错时，重定向到登陆页
     userStore.setToken("");
     router.replace("/login");
     return Promise.reject(error);

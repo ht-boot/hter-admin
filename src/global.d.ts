@@ -8,7 +8,7 @@ declare namespace Menu {
     name: string;
     meta: IMeta;
     children?: MenuOptions[];
-    component?: string | (() => Promise<unknown>);
+    component?: string | (() => Promise<unknown>) | undefined;
   }
   interface IMeta {
     icon: string;
@@ -24,5 +24,16 @@ declare namespace Request {
   interface LoginResult {
     token: string;
     username: string;
+  }
+}
+
+declare namespace PiniaStoreType {
+  interface StoreUserState {
+    token: string;
+    username: string;
+  }
+
+  interface StoreAuthState {
+    menuList: Menu.MenuOptions[];
   }
 }

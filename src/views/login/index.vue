@@ -85,6 +85,7 @@ import { Refresh, UserFilled } from "@element-plus/icons-vue";
 import login from "@/api/modules/login";
 import { getTimeState } from "@/utils/tools";
 import { useUserStore } from "@/store/modules/user";
+import { useAuthStore } from "@/store/modules/auth";
 import { dynamicRouting } from "@/router/modules/dynamicRoutes";
 import ThemeSwitch from "@/layout/components/Header/modules/ThemeSwitch.vue";
 
@@ -95,6 +96,7 @@ interface LoginForm {
 }
 
 const userStore = useUserStore();
+const authStore = useAuthStore();
 const router = useRouter();
 const loading = ref(false);
 const loginForm = reactive<LoginForm>({
@@ -133,7 +135,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
         type: "success",
         duration: 3000,
       });
-      dynamicRouting();
+      dynamicRouting(userStore, authStore);
     } finally {
       loading.value = false;
     }

@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import NProgress from "@/utils/nprogress";
 import { useUserStore } from "@/store/modules/user";
+import { useAuthStore } from "@/store/modules/auth";
+import { dynamicRouting } from "@/router/modules/dynamicRoutes";
+import type { Store } from "pinia";
 
 // 白名单
 const whiteList = ["/login"];
@@ -53,6 +56,8 @@ const router = createRouter({
  * */
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore();
+  const authStore = useAuthStore();
+
   // 进度条 开始
   NProgress.start();
   if (userStore.token) {
@@ -63,6 +68,10 @@ router.beforeEach(async (to, from, next) => {
     // 若返回登录页
     if (to.path.toLocaleLowerCase() === "/login") {
       if (userStore.token) return next(from.fullPath);
+      return next();
+    }
+    if (!authStore.flatMenuList.length) {
+      dynamicRouting(userStore, authStore);
       return next();
     }
     next();
