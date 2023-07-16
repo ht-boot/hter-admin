@@ -46,8 +46,9 @@ const store = useGlobal();
 const { setBreadcrumbList } = store;
 
 const handleClickMenu = (item: Menu.MenuOptions) => {
-  setBreadcrumbList("breadcrumbList", item);
   router.push(item.path);
+  if (item.meta.isFullScreen) return;
+  setBreadcrumbList("breadcrumbList", item);
 };
 </script>
 <style lang="scss" scoped>

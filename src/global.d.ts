@@ -13,7 +13,9 @@ declare namespace Menu {
   interface IMeta {
     icon: string;
     title: string;
-    isKeepAlive?: boolean;
+    isFullScreen: boolean;
+    isHide: boolean;
+    isKeepAlive: boolean;
     [key: string]: any;
   }
 }
