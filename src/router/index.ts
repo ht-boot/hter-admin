@@ -3,7 +3,6 @@ import NProgress from "@/utils/nprogress";
 import { useUserStore } from "@/store/modules/user";
 import { useAuthStore } from "@/store/modules/auth";
 import { dynamicRouting } from "@/router/modules/dynamicRoutes";
-import type { Store } from "pinia";
 
 // 白名单
 const whiteList = ["/login"];
@@ -33,6 +32,10 @@ const staticRoutes: Array<RouteRecordRaw> = [
         },
       },
     ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/errorMessage/404.vue"),
   },
 ];
 
@@ -70,10 +73,12 @@ router.beforeEach(async (to, from, next) => {
       if (userStore.token) return next(from.fullPath);
       return next();
     }
+
     if (!authStore.flatMenuList.length) {
-      dynamicRouting(userStore, authStore);
-      return next();
+      await dynamicRouting(userStore, authStore);
+      return next({ ...to, replace: true });
     }
+
     next();
   } else {
     // 没有token

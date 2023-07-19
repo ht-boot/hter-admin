@@ -12,17 +12,17 @@ const modules = import.meta.glob("@/views/**/*.vue");
  * @returns
  */
 
-type TUser = Store<
+type TUserStore = Store<
   "user-info",
   PiniaStoreType.StoreUserState,
   {},
   {
     setToken(token: string): void;
-    setUserInfo(username: string): void;
+    setUserInfo(userInfo: Request.UserInfo): void;
   }
 >;
 
-type TAuth = Store<
+type TAuthStore = Store<
   "auth",
   PiniaStoreType.StoreAuthState,
   {
@@ -35,7 +35,10 @@ type TAuth = Store<
   { getMenuList(): Promise<void> }
 >;
 
-export const dynamicRouting = async (userStore: TUser, authStore: TAuth) => {
+export const dynamicRouting = async (
+  userStore: TUserStore,
+  authStore: TAuthStore
+) => {
   try {
     await authStore.getMenuList();
 

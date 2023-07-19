@@ -7,12 +7,17 @@
         </el-icon>
         <span>{{ subItem.meta.title }}</span>
       </template>
-      <el-menu-item v-for="item in subItem.children" :key="item.path">
+      <el-menu-item
+        v-for="item in subItem.children"
+        :index="item.path"
+        :key="item.path"
+        @click="handleClickMenu(item)"
+      >
         <el-icon>
           <component :is="subItem.meta.icon"></component>
         </el-icon>
         <template #title>
-          <span>{{ subItem.meta.title }}</span>
+          <span>{{ item.meta.title }}</span>
         </template>
       </el-menu-item>
     </el-sub-menu>
@@ -39,6 +44,8 @@ import { useGlobal } from "@/store/modules/globalConfig";
 
 const authStore = useAuthStore();
 const menuList = computed(() => authStore.menuList);
+
+console.log(menuList.value);
 
 const router = useRouter();
 const store = useGlobal();
