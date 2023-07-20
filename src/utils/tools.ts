@@ -1,3 +1,9 @@
+import CryptoJS from "crypto-js";
+// 十六位十六进制数作为密钥
+const SECRET_KEY = CryptoJS.enc.Utf8.parse("1234123412341234");
+// 十六位十六进制数作为密钥偏移量
+const SECRET_IV = CryptoJS.enc.Utf8.parse("1234123412341234");
+
 // 清除localStorage缓存
 export const exit = () => {
   localStorage.clear();
@@ -15,7 +21,6 @@ export const getTimeState = () => {
 };
 
 // 扁平化数组
-
 export const handleFlatMenuList = (
   menuList: Menu.MenuOptions[]
 ): Menu.MenuOptions[] => {
@@ -25,4 +30,20 @@ export const handleFlatMenuList = (
     item,
     ...(item.children ? handleFlatMenuList(item.children) : []),
   ]);
+};
+
+/**
+ * @description 加密
+ * @param txt
+ * @returns {string}
+ */
+
+export const encrypt = (txt: string): string => {
+  const dataHex = CryptoJS.enc.Utf8.parse(txt);
+  const encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
+    iv: SECRET_IV,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  return encrypted.ciphertext.toString();
 };

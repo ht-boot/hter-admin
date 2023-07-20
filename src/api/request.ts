@@ -29,7 +29,7 @@ service.interceptors.request.use(
     // 当前请求不需要显示 loading。
     config.headers.notLoading || opneFullscreenLoading();
     if (store.token && !isToken) {
-      config.headers["token"] = store.token; // 让每个请求携带自定义token 请根据实际情况自行修改
+      config.headers["authorization"] = `Bearer ${store.token}`; // 让每个请求携带自定义token 请根据实际情况自行修改
     }
 
     return config;

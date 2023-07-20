@@ -88,6 +88,7 @@ import { useUserStore } from "@/store/modules/user";
 // import { useAuthStore } from "@/store/modules/auth";
 // import { dynamicRouting } from "@/router/modules/dynamicRoutes";
 import ThemeSwitch from "@/layout/components/Header/modules/ThemeSwitch.vue";
+import { encrypt } from "@/utils/tools";
 
 const loginFormRef = ref<FormInstance>();
 interface LoginForm {
@@ -124,7 +125,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
     try {
       const data = await login({
         username: loginForm.username.trim(),
-        password: loginForm.password.trim(),
+        password: encrypt(loginForm.password.trim()),
       });
       userStore.setToken(data.token);
       userStore.setUserInfo(data.userInfo);

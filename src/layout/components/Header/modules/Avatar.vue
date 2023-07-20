@@ -3,10 +3,7 @@
     <div class="username">{{ userStore.userInfo.username ?? "admin" }}</div>
     <el-dropdown class="avatar" trigger="click">
       <div class="avatar">
-        <el-avatar
-          src="https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
-          alt="head.jpg"
-        />
+        <el-avatar :src="userStore.userInfo.imageUrl" alt="head.jpg" />
       </div>
       <template #dropdown>
         <el-dropdown-menu>
