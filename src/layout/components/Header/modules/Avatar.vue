@@ -1,6 +1,6 @@
 <template>
   <div class="userinfo">
-    <div class="username">{{ userStore.userInfo.username ?? "admin" }}</div>
+    <div class="username">{{ userStore.userInfo.nickname ?? "admin" }}</div>
     <el-dropdown class="avatar" trigger="click">
       <div class="avatar">
         <el-avatar :src="userStore.userInfo.imageUrl" alt="head.jpg" />

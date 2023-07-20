@@ -34,7 +34,8 @@ declare namespace Request {
     phone: string;
     username: string;
     email: string;
-    create_time: string;
+    nickname: string;
+    create_time?: string;
   }
 }
 

@@ -33,7 +33,7 @@ export const handleFlatMenuList = (
 };
 
 /**
- * @description 加密
+ * @description 前端加密
  * @param txt
  * @returns {string}
  */

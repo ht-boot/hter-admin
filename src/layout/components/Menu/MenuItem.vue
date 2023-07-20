@@ -14,7 +14,7 @@
         @click="handleClickMenu(item)"
       >
         <el-icon>
-          <component :is="subItem.meta.icon"></component>
+          <component :is="item.meta.icon"></component>
         </el-icon>
         <template #title>
           <span>{{ item.meta.title }}</span>
@@ -44,8 +44,6 @@ import { useGlobal } from "@/store/modules/globalConfig";
 
 const authStore = useAuthStore();
 const menuList = computed(() => authStore.menuList);
-
-console.log(menuList.value);
 
 const router = useRouter();
 const store = useGlobal();

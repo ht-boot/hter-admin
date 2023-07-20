@@ -25,7 +25,13 @@
         <HeaderBarToolRight />
       </el-header>
       <el-main>
-        <RouterView />
+        <router-view v-slot="{ Component, route }">
+          <transition appear name="fade-transform" mode="out-in">
+            <keep-alive>
+              <component :is="Component" :key="route.fullPath" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </el-main>
       <el-footer>Footer</el-footer>
     </el-container>
