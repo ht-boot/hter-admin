@@ -76,4 +76,12 @@
       transform: translateX(30px);
     }
   }
+  .el-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    font-size: 14px;
+    color: var(--el-text-color-secondary);
+  }
 }

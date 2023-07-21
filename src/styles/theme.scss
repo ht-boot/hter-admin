@@ -1,0 +1,17 @@
+/* 自定义 element 暗黑模式 */
+html.dark {
+  /* wangEditor */
+  --w-e-toolbar-color: #eeeeee;
+  --w-e-toolbar-bg-color: #141414;
+  --w-e-textarea-bg-color: #141414;
+  --w-e-textarea-color: #eeeeee;
+  --w-e-toolbar-border-color: var(--el-border-color-darker);
+  --w-e-toolbar-active-bg-color: #464646;
+  --w-e-modal-button-bg-color: #464646;
+  --w-e-textarea-slight-bg-color: #141414;
+  /* 图片 */
+  img,
+  .dark-img-bg {
+    filter: brightness(0.8) saturate(1.25);
+  }
+}

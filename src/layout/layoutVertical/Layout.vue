@@ -33,7 +33,7 @@
           </transition>
         </router-view>
       </el-main>
-      <el-footer>Footer</el-footer>
+      <el-footer>2022 © HTer-Admin.</el-footer>
     </el-container>
   </el-container>
 </template>

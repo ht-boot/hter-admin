@@ -20,8 +20,7 @@
   }
 }
 
-/* custom card */
-.card {
+.container_box {
   box-sizing: border-box;
   padding: 20px;
   overflow-x: hidden;
@@ -29,6 +28,8 @@
   border: 1px solid var(--el-border-color-light);
   border-radius: 6px;
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  height: 100%;
+  width: 100%;
 }
 
 /* ProTable 不需要 card 样式（在组件内使用 ProTable 会使用到） */
