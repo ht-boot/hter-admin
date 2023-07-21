@@ -22,6 +22,7 @@ import { nextTick, onBeforeUnmount, shallowRef, computed } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { IToolbarConfig, IEditorConfig } from "@wangeditor/editor";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 wangeditor css
+import { apiUploadImage } from "@/api/modules/uploadFile";
 
 interface RichEditorPropsType {
   value: string; // 富文本值 ==> 必传
@@ -73,6 +74,39 @@ const valueHtml = computed({
   },
 });
 
+// 上传图片
+type InsertFnTypeImg = (url: string, alt?: string, href?: string) => void;
+
+props.editorConfig.MENU_CONF!["uploadImage"] = {
+  //   meta: {
+  //     token: "JpRpxJoUMlo2hQKG",
+  //   },
+
+  async customUpload(file: File, insertFn: InsertFnTypeImg) {
+    if (!uploadImgValidate(file)) return;
+    let formData = new FormData();
+    /**
+     * 为方便暂时这样写，后续会改动到 apiUploadImage() 里面去
+     */
+    formData.append("image", file);
+    formData.append("token", "JpRpxJoUMlo2hQKG");
+    formData.append("type", "alpai");
+    try {
+      const { data } = await apiUploadImage(formData);
+      insertFn(data.fileUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
+
+// 图片上传前判断
+const uploadImgValidate = (file: File): boolean => {
+  // 函数体
+  console.log(file);
+  return true;
+};
+
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
   const editor = editorRef.value;
@@ -93,7 +127,9 @@ defineExpose({
   }
   .editor {
     border: 1px solid #ccc;
+    border-top: none;
     overflow-y: hidden;
   }
 }
 </style>
+@/api/modules/uploadFile

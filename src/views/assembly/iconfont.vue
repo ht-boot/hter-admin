@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import SelectIcons from "@/components/selectIcons/selectIcons.vue";
+import SelectIcons from "@/components/selectIcons/index.vue";
 
 const iconValue = ref<string>("");
 </script>

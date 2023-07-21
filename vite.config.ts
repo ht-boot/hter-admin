@@ -18,10 +18,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
       // 图片服务器
-      "/uplaodImg": {
-        target: " https://v2.alapi.cn/api/image",
+      "/uploadImage": {
+        target: "https://v2.alapi.cn/api/image",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/uplaodImg/, ""),
+        rewrite: (path) => path.replace(/^\/uploadImage/, ""),
       },
     },
   },

@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import WangEditor from "@/components/wangEditor/WangEditor.vue";
+import WangEditor from "@/components/wangEditor/index.vue";
 import { ref, watch } from "vue";
 const content = ref("");
 

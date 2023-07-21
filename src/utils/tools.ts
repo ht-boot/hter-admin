@@ -47,3 +47,16 @@ export const encrypt = (txt: string): string => {
   });
   return encrypted.ciphertext.toString();
 };
+
+/**
+ * @description formData 数据转换
+ * @param files 转化对象
+ * @returns {FormData}
+ */
+export const toFormData = (files: any) => {
+  const formData = new FormData();
+  for (let item in files) {
+    formData.append(item, files[item]);
+  }
+  return formData;
+};
