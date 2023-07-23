@@ -27,9 +27,10 @@
       <el-main>
         <router-view v-slot="{ Component, route }">
           <transition appear name="fade-transform" mode="out-in">
-            <keep-alive>
+            <!-- <keep-alive>
               <component :is="Component" :key="route.fullPath" />
-            </keep-alive>
+            </keep-alive> -->
+            <component :is="Component" :key="route.fullPath" />
           </transition>
         </router-view>
       </el-main>

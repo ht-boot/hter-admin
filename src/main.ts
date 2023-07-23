@@ -6,6 +6,8 @@ import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/styles/theme.scss";
 
+import directives from "./directives"; // 自定义指令
+
 import App from "./App.vue";
 import router from "./router";
 
@@ -20,4 +22,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
-app.use(router).use(pinia).use(ElementPlus).mount("#app");
+app.use(router).use(pinia).use(ElementPlus).use(directives).mount("#app");
