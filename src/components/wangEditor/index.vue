@@ -132,4 +132,3 @@ defineExpose({
   }
 }
 </style>
-@/api/modules/uploadFile

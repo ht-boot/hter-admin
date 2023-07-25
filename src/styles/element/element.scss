@@ -29,6 +29,8 @@
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 /* main-box (树形表格 treeFilter 页面会使用，左右布局 flex) */

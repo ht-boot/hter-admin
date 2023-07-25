@@ -8,6 +8,8 @@ import {
   closeFullscreenLoading,
 } from "@/utils/fullscreenLoading";
 
+console.log(import.meta.env);
+
 // 获取浏览器地址 url
 const baseURL = window.location.origin;
 

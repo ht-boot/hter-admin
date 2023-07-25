@@ -11,13 +11,8 @@
 
 <script lang="ts" setup>
 import WangEditor from "@/components/wangEditor/index.vue";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 const content = ref("");
-
-watch(
-  () => content.value,
-  (val: string) => {
-    console.log(val);
-  }
-);
 </script>
+
+<style lang="scss" scoped></style>
