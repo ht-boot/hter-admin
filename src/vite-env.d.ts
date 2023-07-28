@@ -5,6 +5,9 @@ declare module "*.vue" {
   export default component;
 }
 
+declare module "element-plus/dist/locale/zh-cn.mjs";
+declare module "element-plus/dist/locale/en.mjs";
+
 import * as axios from "axios";
 declare module "axios" {
   interface AxiosInstance {
