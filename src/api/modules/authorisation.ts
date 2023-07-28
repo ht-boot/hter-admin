@@ -10,3 +10,10 @@ export const apiGetMenuList = async (): Promise<Menu.MenuOptions[]> => {
     },
   });
 };
+
+export const apiGetUserList = async () => {
+  return await service({
+    method: "get",
+    url: "/api/user/list",
+  });
+};
