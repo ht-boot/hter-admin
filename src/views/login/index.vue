@@ -219,6 +219,10 @@ html.dark {
           justify-content: space-between;
           .el-button {
             width: 40%;
+            height: 38px;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 5px;
           }
         }
       }
