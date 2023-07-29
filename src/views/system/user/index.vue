@@ -37,14 +37,19 @@
           </el-form-item>
           <el-form-item label="创建时间">
             <el-input
-              v-model="queryKeys.phone"
+              v-model="queryKeys.createTime"
               autocomplete="off"
               placeholder="请选择用户状态"
             />
           </el-form-item>
           <el-form-item
             ><el-space wrap
-              ><el-button type="primary" :icon="Search">搜索</el-button>
+              ><el-button
+                type="primary"
+                :icon="Search"
+                @click="handleSearchUser"
+                >搜索</el-button
+              >
               <el-button :icon="Refresh">重置</el-button></el-space
             >
           </el-form-item>
@@ -140,8 +145,12 @@ import Pagination from "@/components/pagination/index.vue";
 
 const tableData = ref();
 
-onMounted(async () => {
-  tableData.value = await apiGetUserList();
+const getUserList = async () => {
+  tableData.value = await apiGetUserList(queryKeys);
+};
+
+onMounted(() => {
+  getUserList();
 });
 
 const queryKeys = reactive({
@@ -157,6 +166,10 @@ const totals = ref<number>(40);
 
 const handleSelectRow = (selection: any, row: any) => {
   console.log(selection, row);
+};
+
+const handleSearchUser = () => {
+  getUserList();
 };
 </script>
 

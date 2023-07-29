@@ -11,9 +11,17 @@ export const apiGetMenuList = async (): Promise<Menu.MenuOptions[]> => {
   });
 };
 
-export const apiGetUserList = async () => {
+export const apiGetUserList = async (params: {
+  username: string;
+  phone: string;
+  status: string;
+  createTime: string;
+  currentPage: number;
+  pageSize: number;
+}) => {
   return await service({
     method: "get",
     url: "/api/user/list",
+    params,
   });
 };
